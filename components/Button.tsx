@@ -1,7 +1,9 @@
-export default function Button({
-  text,
-}: Readonly<{
-  text: string;
-}>) {
-  return <button>{text}</button>;
+export default function Button(
+  props: React.PropsWithChildren<{ text: string; onClick: () => void }>,
+): JSX.Element {
+  return (
+    <button className='btn' onClick={props.onClick}>
+      {props.text}
+    </button>
+  );
 }
