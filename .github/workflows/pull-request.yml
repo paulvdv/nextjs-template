@@ -5,9 +5,39 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  lint:
-    uses: ./.github/workflows/lint.yml
-    secrets: inherit
-  test:
-    uses: ./.github/workflows/test.yml
-    secrets: inherit
+  cache_and_install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install
+  lint_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: TSC check
+        run: pnpm tsc
+
+      - name: Linting check
+        run: pnpm lint
+
+      - name: Formatting check
+        run: pnpm format
+
+      - name: Test
+        run: pnpm test
+      # TODO - add coverage step
