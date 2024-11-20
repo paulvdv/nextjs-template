@@ -23,6 +23,7 @@ describe("Button", () => {
   it("renders without changes", () => {
     expect(tree.container).toMatchSnapshot();
   });
+
   it("renders a button with prop text", () => {
     const button = screen.getByText(text);
     expect(button).toBeInTheDocument();
@@ -30,7 +31,6 @@ describe("Button", () => {
 
   it("call the onClick callback when clicking the button", () => {
     const button = screen.getByText(text);
-    expect(button).toBeInTheDocument();
 
     button.click();
 
