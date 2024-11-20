@@ -1,11 +1,9 @@
-name: PR Checks
-
+name: Pull Request checks
+run-name: ${{ github.actor }} is running PR checks 🚀
 on: [pull_request]
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   lint:
     uses: ./.github/workflows/lint.yml
