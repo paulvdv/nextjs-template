@@ -21,15 +21,18 @@ async function parseResponse<T>(response: Response): Promise<T> {
   throw new Error(`Unsupported content type: ${contentType}`);
 }
 
-export default async function fetcher<T>(url: string): Promise<T> {
+export default async function fetcher<T>(
+  url: string,
+  method = "GET",
+): Promise<T> {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { method });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return await parseResponse<T>(response);
+    return parseResponse<T>(response);
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
