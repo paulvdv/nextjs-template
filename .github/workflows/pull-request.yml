@@ -22,4 +22,6 @@ jobs:
 
       - name: Test
         run: pnpm test
-      # TODO - add coverage step
+
+      - name: Test coverage
+        run: pnpm test:coverage
